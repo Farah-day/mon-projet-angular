@@ -10,9 +10,10 @@ export class PostComponent implements OnInit {
 
   @Input() postTitle: string;
   @Input() postContent: string;
-  @Input() postStatus: number;
+  @Input() loveIts: number;
   @Input() postDate: Date;
   @Input() indexOfPost: number;
+  @Input() id: number;
 
   constructor(private postService: PostService) { }
 

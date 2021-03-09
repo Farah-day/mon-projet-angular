@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    <form (ngSubmit)="onSubmit(formulaire)" #formulaire="ngForm">
+      <div class="form-group">
+        <label for="title">
+          Titre du post
+        </label>
+        <input type="text" id="title" class="form-control" name="title" ngModel required>
+      </div>
+
+      <div class="form-group">
+        <label for="postContent">
+          Contenu du post
+        </label>
+        <input type="text" id="postContent" class="form-control" name="postContent" ngModel required>
+      </div>
+
+      <div class="form-group">
+        <label for="loveIts">
+          Nombre de likes du post
+        </label>
+        <select id="loveIts" class="form-control" name="loveIts" [ngModel]="defaultLoveIts">
+          <option value="0">0</option>
+          <option value="1">1</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="formulaire.invalid">Enregistrer</button>
+    </form>
+  </div>
+</div>

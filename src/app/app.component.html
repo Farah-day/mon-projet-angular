@@ -1,23 +1,18 @@
-<!-- Toolbar -->
-<div class="container">
-  <div class="row col-xs-12">
-    <h2>Posts</h2>
-
-    <p>Mis à jour : {{ lastUpdate | async | date: 'EEEE d MMMM y' | uppercase }}</p>
-
-    <ul class="list-group">
-      <app-post *ngFor="let post of posts; let i = index"
-                    [indexOfPost]="i"
-                    [postTitle]="post.title"
-                    [postContent]="post.content"
-                    [postStatus]="post.loveIts"
-                    [postDate]="post.created_at">
-      </app-post>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li routerLinkActive="active"><a routerLink="auth">Authentification</a></li>
+      <li routerLinkActive="active"><a routerLink="posts">Posts</a></li>
+      <li routerLinkActive="active"><a routerLink="edit">Nouveau post</a></li>
     </ul>
+    <div class="navbar-right">
+      <p>Vous êtes connecté depuis {{secondes}} secondes</p>
+    </div>
+  </div>
+</nav>
 
-    <button class="btn btn-success"
-            (click)="onLikeAll()">Tout liker</button>
-    <button class="btn btn-danger"
-            (click)="onDislikeAll()">Tout disliker</button>
+<div class="container">
+  <div class="row">
+    <router-outlet></router-outlet>
   </div>
 </div>

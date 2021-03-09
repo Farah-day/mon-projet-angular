@@ -1,45 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {PostService} from './services/post.service';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs-compat/add/observable/interval';
+
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  isAuth = false;
+export class AppComponent implements OnInit, OnDestroy {
 
-  lastUpdate = new Promise(
-    (resolve) => {
-      const date = new Date();
-      setTimeout(
-        () => {
-          resolve(date);
-        }, 2000
-      );
-    }
-  );
+  secondes: number;
+  counterSubscription: Subscription;
 
-  posts: any[];
-
-  constructor(private postService: PostService) {
-    setTimeout(
-      () => {
-        this.isAuth = true;
-      },
-      4000
-    );
+  constructor() {
   }
 
   ngOnInit(): void {
-    this.posts = this.postService.posts;
+    const counter = Observable.interval(1000);
+    this.counterSubscription = counter.subscribe(
+      (value: number) => {
+        this.secondes = value;
+      }
+    );
   }
 
-  onLikeAll(): void {
-    this.postService.likeAll();
-  }
-
-  onDislikeAll(): void {
-    this.postService.dislikeAll();
+  ngOnDestroy(): void {
+    this.counterSubscription.unsubscribe();
   }
 }
