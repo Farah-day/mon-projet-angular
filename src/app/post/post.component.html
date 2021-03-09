@@ -1,0 +1,17 @@
+<li [ngClass]="{'list-group-item': true,
+                'list-group-item-success': postStatus > 0,
+                'list-group-item-danger': postStatus < 0}" xmlns="http://www.w3.org/1999/html">
+  <div class="col-md-6">
+    <h4><strong>{{ postTitle }}</strong></h4>
+  </div>
+  <div class="col-md-6 text-right">
+    <h4>{{ postDate | date: 'EEEE d MMMM y' }}</h4>
+  </div>
+  <h4>{{ postContent }}</h4>
+
+  <p>Nombre de likes : {{ postStatus }}</p>
+
+  <button type="button" class="btn btn-success" (click)="iLoveIt()">Love it!</button>
+  <button type="button" class="btn btn-danger" (click)="iDontLoveIt()">Don't love it!</button>
+</li>
+

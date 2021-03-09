@@ -19,19 +19,26 @@ export class AppComponent {
     }
   );
 
-  appareils = [
+  posts = [
     {
-      name: 'Machine à laver',
-      status: 'éteint'
+      title: 'Mon premier post',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
+      loveIts: 1,
+      created_at: new Date()
     },
     {
-      name: 'TV',
-      status: 'allumé'
+      title: 'Mon deuxième post',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
+      loveIts: 0,
+      created_at: new Date()
     },
     {
-      name: 'PC',
-      status: 'éteint'
-    }];
+      title: 'Mon troisième post',
+      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
+      loveIts: -1,
+      created_at: new Date()
+    }
+  ];
 
   constructor() {
     setTimeout(
