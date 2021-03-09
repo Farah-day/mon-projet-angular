@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PostService} from './services/post.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   isAuth = false;
 
   lastUpdate = new Promise(
@@ -19,28 +20,9 @@ export class AppComponent {
     }
   );
 
-  posts = [
-    {
-      title: 'Mon premier post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: 1,
-      created_at: new Date()
-    },
-    {
-      title: 'Mon deuxième post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: 0,
-      created_at: new Date()
-    },
-    {
-      title: 'Mon troisième post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: -1,
-      created_at: new Date()
-    }
-  ];
+  posts: any[];
 
-  constructor() {
+  constructor(private postService: PostService) {
     setTimeout(
       () => {
         this.isAuth = true;
@@ -49,7 +31,15 @@ export class AppComponent {
     );
   }
 
-  onAllumer(): void {
-    console.log('On allume tout !');
+  ngOnInit(): void {
+    this.posts = this.postService.posts;
+  }
+
+  onLikeAll(): void {
+    this.postService.likeAll();
+  }
+
+  onDislikeAll(): void {
+    this.postService.dislikeAll();
   }
 }

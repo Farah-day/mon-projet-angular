@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {PostService} from '../services/post.service';
 
 @Component({
   selector: 'app-post',
@@ -11,17 +12,18 @@ export class PostComponent implements OnInit {
   @Input() postContent: string;
   @Input() postStatus: number;
   @Input() postDate: Date;
+  @Input() indexOfPost: number;
 
-  constructor() { }
+  constructor(private postService: PostService) { }
 
   ngOnInit(): void {
   }
 
-  iLoveIt(): void {
-    this.postStatus += 1;
+  onLike(): void{
+    this.postService.likeOne(this.indexOfPost);
   }
 
-  iDontLoveIt(): void{
-    this.postStatus -= 1;
+  onDislike(): void{
+    this.postService.dislikeOne(this.indexOfPost);
   }
 }
