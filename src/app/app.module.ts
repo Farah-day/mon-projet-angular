@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -16,12 +16,17 @@ import { SinglePostComponent } from './single-post/single-post.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import {AuthGuardService} from './services/auth.guard.service';
 import { EditPostComponent } from './edit-post/edit-post.component';
+import { UserListComponent } from './user-list/user-list.component';
+import {UserService} from './services/user.service';
+import { NewUserComponent } from './new-user/new-user.component';
 
 const appRoutes: Routes = [
   {path: 'posts', canActivate: [AuthGuardService], component: PostViewComponent},
   {path: 'posts/:id', canActivate: [AuthGuardService], component: SinglePostComponent},
   {path: 'edit', canActivate: [AuthGuardService], component: EditPostComponent},
   {path: 'auth', component: AuthComponent},
+  {path: 'users', component: UserListComponent},
+  {path: 'new-user', component: NewUserComponent},
   {path: '', component: PostViewComponent},
   {path: 'not-found', component: FourOhFourComponent},
   {path: '**', redirectTo: '/not-found'}
@@ -36,19 +41,23 @@ const appRoutes: Routes = [
     PostViewComponent,
     SinglePostComponent,
     FourOhFourComponent,
-    EditPostComponent
+    EditPostComponent,
+    UserListComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     PostService,
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
