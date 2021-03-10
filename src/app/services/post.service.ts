@@ -1,29 +1,16 @@
 import {Subject} from 'rxjs';
+import {Post} from '../models/post.model';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 
+@Injectable()
 export class PostService {
 
-  postSubject = new Subject<any[]>();
+  private posts = [];
+  postSubject = new Subject<Post[]>();
 
-  private posts = [
-    {
-      id: 1,
-      title: 'Mon premier post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: 1,
-    },
-    {
-      id: 2,
-      title: 'Mon deuxième post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: 0,
-    },
-    {
-      id: 3,
-      title: 'Mon troisième post',
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tincidunt, diam ut auctor congue, arcu urna hendrerit risus, vitae convallis risus nulla eu odio.',
-      loveIts: -1,
-    }
-  ];
+  constructor(private httpClient: HttpClient) {
+  }
 
   emitPostSubject(): void{
     this.postSubject.next(this.posts.slice());
@@ -61,19 +48,36 @@ export class PostService {
     this.emitPostSubject();
   }
 
-  addPost(title: string, content: string, loveIts: number): void{
-    const postObject = {
-      id: 0,
-      title: '',
-      content: '',
-      loveIts: 0
-    };
-    postObject.title = title;
-    postObject.content = content;
-    postObject.loveIts = loveIts;
-    postObject.id = this.posts[(this.posts.length - 1)].id + 1;
-
-    this.posts.push(postObject);
+  addPost(newPost: Post): void{
+    this.posts.push(newPost);
+    this.savePostToServer();
     this.emitPostSubject();
+  }
+
+  savePostToServer(): void{
+    this.httpClient
+      .put('https://http-client-mon-projet-angular-default-rtdb.firebaseio.com/posts.json', this.posts)
+      .subscribe(
+        () => {
+          console.log('Enregistrement terminé !');
+        },
+        (error) => {
+          console.log('Erreur de sauvegarde : ' + error);
+        }
+      );
+  }
+
+  getPostFromServer(): void{
+    this.httpClient
+      .get<any[]>('https://http-client-mon-projet-angular-default-rtdb.firebaseio.com/posts.json')
+      .subscribe(
+        (response) => {
+          this.posts = response;
+          this.emitPostSubject();
+        },
+        (error) => {
+          console.log('Erreur de chargement : ' + error);
+        }
+      );
   }
 }

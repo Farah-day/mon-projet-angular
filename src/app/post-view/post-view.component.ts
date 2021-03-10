@@ -50,4 +50,11 @@ export class PostViewComponent implements OnInit {
     this.postService.dislikeAll();
   }
 
+  onSave(): void {
+    this.postService.savePostToServer();
+  }
+
+  onFetch(): void {
+    this.postService.getPostFromServer();
+  }
 }
